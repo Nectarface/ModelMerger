@@ -1,57 +1,61 @@
-# ⚙️ ModelForge Fusion Suite v14
+# 🔀 Stable Model Merger Extension
 
-**The ultimate local AI toolkit.**  
-Model merging, LoRA stacking, multi-model workflows, real-time image generation, and experimental training pipelines — all in one modular, offline-ready extension for Stable Diffusion.
+A powerful, modular extension for **AUTOMATIC1111's Stable Diffusion WebUI** that enables advanced model merging, training, and LoRA stacking workflows.
 
 ![banner](assets/banner.png)
 
 ---
 
-## 🔥 Core Highlights
+## 🚀 Features
 
-- 🔀 **Dynamic Model Merger**
-- 🧬 **LoRA Composer + Stacker**
+- ✅ **Dynamic Checkpoint Merger**
 - 🧠 **Dual-Stream Trainer**
+- 🎼 **LoRA Composer + Stacker**
 - ⚡ **Parallel Merge Engine**
-- 🎛 **10x Workflow Control Panel**
-- 🖼 **Live txt2img API Execution**
-- 📊 **Output Comparison Grid**
-- 🧩 **Plugin-Ready Architecture**
+- 📜 **Log Viewer**
+- 🧪 **Trainer Dashboard**
+- 🖼 **Preview Generator**
 
 ---
 
 ## 📦 Installation
 
-```bash
-git clone https://github.com/YOUR_USERNAME/ModelForgeFusionSuite.git
-mv ModelForgeFusionSuite stable-diffusion-webui/extensions/
+1. Clone or download:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/stable-model-merger.git
+   ```
+
+2. Move to your WebUI extensions folder:
+   ```
+   stable-diffusion-webui/extensions/stable-model-merger
+   ```
+
+3. Restart WebUI.
+
+---
+
+## 🧰 Requirements
+
+- Python 3.10 / 3.11
+- torch 2.1.x
+- AUTOMATIC1111 WebUI
+
+---
+
+## 📂 Structure
+
+```
+stable-model-merger/
+├── scripts/
+├── ui/
+├── assets/
+│   └── banner.png
+├── README.md
 ```
 
-Then **restart WebUI**.
-
 ---
 
-## 🧠 Workflow Architecture
+## 📄 License
 
-Each workflow supports independent model/prompt control and live generation.
+MIT License
 
----
-
-## 🔁 Addons Included
-
-| Addon                  | Description                                      |
-|------------------------|--------------------------------------------------|
-| LoRA Stacker           | Weighted stacking + fuse preview                |
-| Smart Merge Visualizer | Model graph viewer + blend ratio nodes          |
-| Prompt Relay Engine    | Forward prompt output from one model to another |
-| AutoTagger             | Generate tags from training images              |
-| Face+Body Trainer      | Dual dataset training + merge                   |
-| Workflow Optimizer     | Auto-recommend settings from dataset folder     |
-| Web Dashboard (stub)   | Electron or Flask control UI base               |
-
----
-
-## 📜 License
-
-MIT License  
-Use it. Fork it. Build something legendary.
