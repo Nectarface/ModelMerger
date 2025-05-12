@@ -1,5 +1,7 @@
 
 import gradio as gr
+import requests
+import os
 
 AVAILABLE_MODELS = [
     "dreamlike-photoreal-2.0.ckpt",
@@ -14,9 +16,35 @@ AVAILABLE_MODELS = [
     "deepPortrait-v3.ckpt"
 ]
 
+API_URL = "http://127.0.0.1:7860"
+
+def generate_image(prompt, model_name, index):
+    try:
+        # Set model
+        requests.post(f"{API_URL}/sdapi/v1/options", json={"sd_model_checkpoint": model_name})
+
+        # Generate image
+        payload = {
+            "prompt": prompt,
+            "steps": 25,
+            "width": 512,
+            "height": 512,
+            "sampler_index": "Euler a"
+        }
+        response = requests.post(f"{API_URL}/sdapi/v1/txt2img", json=payload).json()
+        image_data = response["images"][0]
+        output_dir = "outputs/workflow_compare"
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, f"workflow_{index+1}.png")
+        with open(output_path, "wb") as f:
+            f.write(requests.get(f"data:image/png;base64,{image_data}".split(",", 1)[1]).content)
+        return output_path
+    except Exception as e:
+        return f"❌ Error in workflow {index+1}: {str(e)}"
+
 def launch_workflow_comparison_ui():
     with gr.Blocks() as ui:
-        gr.Markdown("## 🧪 Compare Outputs Across 10 Workflows")
+        gr.Markdown("## 🧪 Real-Time Comparison Across 10 Workflows (txt2img)")
 
         prompts = []
         images = []
@@ -31,17 +59,17 @@ def launch_workflow_comparison_ui():
                 images.append(gr.Image(label=f"Output {i+1}", type="filepath"))
 
         generate_btn = gr.Button("Generate All")
-        status = gr.Textbox(label="Status")
+        status = gr.Textbox(label="Status", lines=2)
 
         def generate_all(*args):
             all_prompts = args[::2]
             selected_models = args[1::2]
-            results = []
+            output_paths = []
             for i in range(10):
-                # Placeholder image path using model name and prompt
-                results.append(f"/fake/path/output_wf{i+1}_{selected_models[i].replace('.ckpt','')}.png")
-            return results + ["✅ Simulated generation using model-per-workflow."]
-
+                path = generate_image(all_prompts[i], selected_models[i], i)
+                output_paths.append(path)
+            return output_paths + ["✅ All images generated."]
+        
         generate_btn.click(fn=generate_all, inputs=sum(zip(prompts, model_selectors), ()), outputs=images + [status])
 
     return ui
